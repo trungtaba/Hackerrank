@@ -31,6 +31,7 @@ public class Solution {
 
             int result = divisors(n);
 
+            
             System.out.println(result);
         }
     }
