@@ -40,19 +40,19 @@ public class Solution {
         }
     }
 
-    public static void printSinglyLinkedList(SinglyLinkedListNode node, String sep, BufferedWriter bufferedWriter) throws IOException {
+    public static void printSinglyLinkedList(SinglyLinkedListNode node, String sep) {
         while (node != null) {
-            bufferedWriter.write(String.valueOf(node.data));
+            System.out.print(node.data);
 
             node = node.next;
 
             if (node != null) {
-                bufferedWriter.write(sep);
+                System.out.print(sep);
             }
         }
     }
 
-    // Complete the reverse function below.
+    // Complete the reversePrint function below.
 
     /*
      * For your reference:
@@ -63,24 +63,21 @@ public class Solution {
      * }
      *
      */
-    static SinglyLinkedListNode reverse(SinglyLinkedListNode head) {
-        SinglyLinkedListNode newTail = null;
-        while (head != null) {
-            SinglyLinkedListNode next = head.next;
-            head.next = newTail;
-            newTail = head;
-            head = next;
+    static void reversePrint(SinglyLinkedListNode head) {
+        ArrayList<Integer> arrayList=new ArrayList<>();
+        while(head!=null){
+            arrayList.add(head.data);
+            head=head.next;
         }
-
-        return newTail;
+        for(int i=arrayList.size()-1;i>=0;i--){
+            System.out.println(arrayList.get(i));
+        }
 
     }
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
-
+    public static void main(String[] args) {
         int tests = scanner.nextInt();
         scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
 
@@ -97,13 +94,8 @@ public class Solution {
                 llist.insertNode(llistItem);
             }
 
-            SinglyLinkedListNode llist1 = reverse(llist.head);
-
-            printSinglyLinkedList(llist1, " ", bufferedWriter);
-            bufferedWriter.newLine();
+            reversePrint(llist.head);
         }
-
-        bufferedWriter.close();
 
         scanner.close();
     }
