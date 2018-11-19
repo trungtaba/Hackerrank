@@ -1,63 +1,45 @@
 
 //https://www.hackerrank.com/challenges/largest-rectangle/problem
-
-import java.util.Deque;
+import java.util.Stack;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Solution {
 
     static long largestRectangle(int[] input) {
-        Deque<Integer> stack = new LinkedList<Integer>();
-        int maxArea = 0;
-        int area = 0;
-        int i;
-        for (i = 0; i < input.length;) {
-            if (stack.isEmpty() || input[stack.peekFirst()] <= input[i]) {
-                stack.offerFirst(i++);
+        Stack<Integer> stack = new Stack<>();
+        int max_area = 0; // Initialize max area 
+        int tp;  // To store top of stack 
+        int area_with_top; // To store area with top bar as the smallest bar 
+
+        int i = 0;
+        while (i < input.length) {
+            if (stack.empty() || input[stack.peek()] <= input[i]) {
+                stack.push(i++);
             } else {
-                int top = stack.pollFirst();
-                // if stack is empty means everything till i has to be
-                // greater or equal to input[top] so get area by
-                // input[top] * i;
-                if (stack.isEmpty()) {
-                    area = input[top] * i;
-                } // if stack is not empty then everythin from i-1 to input.peek() + 1
-                  // has to be greater or equal to input[top]
-                  // so area = input[top]*(i - stack.peek() - 1);
-                else {
-                    area = input[top] * (i - stack.peekFirst() - 1);
-                }
-                if (area > maxArea) {
-                    maxArea = area;
+                tp = stack.peek();
+                stack.pop();
+                area_with_top = input[tp] * (stack.empty() ? i : (i - stack.peek() - 1));
+                if (max_area < area_with_top) {
+                    max_area = area_with_top;
                 }
             }
         }
-        while (!stack.isEmpty()) {
-            int top = stack.pollFirst();
-            // if stack is empty means everything till i has to be
-            // greater or equal to input[top] so get area by
-            // input[top] * i;
-            if (stack.isEmpty()) {
-                area = input[top] * i;
-            } // if stack is not empty then everything from i-1 to input.peek() + 1
-              // has to be greater or equal to input[top]
-              // so area = input[top]*(i - stack.peek() - 1);
-            else {
-                area = input[top] * (i - stack.peekFirst() - 1);
+        while (!stack.empty()) {
+            tp = stack.peek();
+            stack.pop();
+            area_with_top = input[tp] * (stack.empty() ? i : (i - stack.peek() - 1));
+            if (max_area < area_with_top) {
+                max_area = area_with_top;
             }
-            if (area > maxArea) {
-                maxArea = area;
-            }
+
         }
-        return maxArea;
+        return max_area;
     }
 
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Deque<Integer> stack = new LinkedList<Integer>();
-
         int n = scanner.nextInt();
         scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
 
