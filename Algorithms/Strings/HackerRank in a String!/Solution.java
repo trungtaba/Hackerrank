@@ -1,17 +1,4 @@
-//Problem: https://www.hackerrank.com/challenges/hackerrank-in-a-string
-//Java 8
-/*
-Initial Thoughts:
-We have an array of chars and
-advance our position when we 
-find a matching char in S and
-if we reach the last index before
-our string is done then we print YES
-else we print NO
 
-Time Complexity: O(n) //We have to iterate through the whole string
-Space Complexity: O(1) //We just store the HackerRank array
-*/
 import java.io.*;
 import java.util.*;
 import java.text.*;
